@@ -1,12 +1,12 @@
 # Seminar1
-Done:
-ArrayStack
-CyclicArrayQueue
-LinkedDeque
-LinkedQueue
-LinkedStack
-TwoStackQueue
-MergingIncreasingIterator
-ParenthesesSequence
-ParenthesesSequenceExt
-Solver
+Done:<br>
+ArrayStack<br>
+CyclicArrayQueue<br>
+LinkedDeque<br>
+LinkedQueue<br>
+LinkedStack<br>
+TwoStackQueue<br>
+MergingIncreasingIterator<br>
+ParenthesesSequence<br>
+ParenthesesSequenceExt<br>
+Solver<br>
