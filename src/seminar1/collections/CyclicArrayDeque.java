@@ -2,7 +2,6 @@ package seminar1.collections;
 
 import java.util.Iterator;
 
-//недоделано
 public class CyclicArrayDeque<Item> implements IDeque<Item> {
 
     private static final int DEFAULT_CAPACITY = 10;
@@ -15,27 +14,32 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
     public CyclicArrayDeque() {
         elementData = (Item[]) new Object[DEFAULT_CAPACITY];
         size = 0;
-        head = elementData.length - 1;
+        head = 0;
         tail = 0;
     }
 
     @Override
     public void pushFront(Item item) {
-        elementData[tail] = item;
+        head--;
+        if (head < 0) {
+            head = elementData.length - 1;
+        }
+        elementData[head] = item;
         size++;
-        tail = (tail + 1) % elementData.length;
-        if (tail == head) {
+        if (size == elementData.length) {
             grow();
         }
     }
 
     @Override
     public void pushBack(Item item) {
-        elementData[head] = item;
+        if (tail >= elementData.length) {
+            tail = 0;
+        }
+        elementData[tail] = item;
+        tail++;
         size++;
-        //head = (head - 1) % elementData.length;
-        head = (head - 1 < 0) ? elementData.length - 1 : head - 1;
-        if (tail == head) {
+        if (size == elementData.length) {
             grow();
         }
     }
@@ -45,18 +49,17 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
         if (size == 0) {
             return null;
         }
-        tail = (tail - 1 >= 0) ? tail - 1 : elementData.length - 1;
-        Item item = elementData[tail];
-        if (item != null) {
-            elementData[tail] = null;
-            size--;
-            //tail = (tail - 1 >= 0) ? tail - 1 : elementData.length - 1;
-            if (elementData.length >= 4 * size) {
-                shrink();
-            }
-            return item;
+        Item item = elementData[head];
+        elementData[head] = null;
+        head++;
+        if (head >= elementData.length) {
+            head = 0;
         }
-        return null;
+        size--;
+        if (elementData.length >= 4 * size) {
+            shrink();
+        }
+        return item;
     }
 
     @Override
@@ -64,18 +67,17 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
         if (size == 0) {
             return null;
         }
-        head = (head + 1) % elementData.length;
-        Item item = elementData[head];
-        if (item != null) {
-            elementData[head] = null;
-            size--;
-            //head = (head + 1) % elementData.length;
-            if (elementData.length >= 4 * size) {
-                shrink();
-            }
-            return item;
+        tail--;
+        if (tail < 0) {
+            tail = elementData.length - 1;
         }
-        return null;
+        Item item = elementData[tail];
+        elementData[tail] = null;
+        size--;
+        if (elementData.length >= 4 * size) {
+            shrink();
+        }
+        return item;
     }
 
     @Override
@@ -89,28 +91,32 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
     }
 
     private void grow() {
-        int newCapacity = (int) (elementData.length * 1.5f);
-        Item a[] = (Item[]) new Object[newCapacity];
-        int length = elementData.length - head;
-        System.arraycopy(elementData, 0, a, 0, tail + 1);
-        System.arraycopy(elementData, head, a, newCapacity - length, length);
+        int newLength = (int) (elementData.length * 1.5);
+        int l = elementData.length - tail;
+        Item[] a = (Item[]) new Object[newLength];
+        System.arraycopy(elementData, 0, a, 0, tail);
+        System.arraycopy(elementData, tail, a, newLength - l, l);
         elementData = a;
-        head = newCapacity - length;
+        head = newLength - l;
     }
 
     private void shrink() {
-        /**
-         * TODO: implement it
-         * Если количество элементов в четыре раза меньше,
-         * то уменьшить его размер в два раза
-         */
-        int newCapacity = elementData.length >> 1;
-        Item a[] = (Item[]) new Object[newCapacity];
-        int length = elementData.length - head;
-        System.arraycopy(elementData, 0, a, 0, tail + 1);
-        System.arraycopy(elementData, head, a, newCapacity - length, length);
+        int newLength = elementData.length >>> 1;
+        if (newLength < DEFAULT_CAPACITY) {
+            newLength = DEFAULT_CAPACITY;
+        }
+        Item a[] = (Item[]) new Object[newLength];
+        if (tail < head) {
+            int l = elementData.length - head;
+            System.arraycopy(elementData, 0, a, 0, tail + 1);
+            System.arraycopy(elementData, head, a, newLength - l, l);
+            head = newLength - l;
+        } else {
+            System.arraycopy(elementData, tail, a, 0, head - tail + 1);
+            head = head - tail + 1;
+            tail = newLength - 1;
+        }
         elementData = a;
-        head = newCapacity - length + 1;
     }
 
     @Override
@@ -118,4 +124,5 @@ public class CyclicArrayDeque<Item> implements IDeque<Item> {
         /* TODO: implement it */
         return null;
     }
+
 }
