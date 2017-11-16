@@ -43,11 +43,12 @@ public class ArrayPriorityQueue<Key extends Comparable<Key>> implements IPriorit
         }
         Key min = elementData[0];
         size--;
+        elementData[0] = elementData[size];
+        elementData[size] = null;
+        siftDown(0);
         if (elementData.length >= 4 * size) {
             shrink();
         }
-        elementData[0] = elementData[size];
-        siftDown(0);
         return min;
     }
 
@@ -86,18 +87,16 @@ public class ArrayPriorityQueue<Key extends Comparable<Key>> implements IPriorit
         int left = 2 * index + 1;
         int right = left + 1;
 
-        if (right < size && greater(left, right)) {
+        if (right < size && greater(left, right) && greater(index, right)) {
             Key temp = elementData[right];
             elementData[right] = elementData[index];
             elementData[index] = temp;
             siftDown(right);
-        } else if (left < size) {
+        } else if (left < size && greater(index, left)) {
             Key temp = elementData[left];
             elementData[left] = elementData[index];
             elementData[index] = temp;
             siftDown(left);
-        } else {
-            return;
         }
     }
 
@@ -110,7 +109,7 @@ public class ArrayPriorityQueue<Key extends Comparable<Key>> implements IPriorit
     }
 
     private void shrink() {
-        int newSize = (int) (size / 2);
+        int newSize = elementData.length / 2;
         newSize = Math.max(newSize, DEFAULT_CAPACITY);
         Key[] a = (Key[]) new Comparable[newSize];
         System.arraycopy(elementData, 0, a, 0, size);
