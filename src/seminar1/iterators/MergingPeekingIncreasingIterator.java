@@ -3,6 +3,8 @@ package seminar1.iterators;
 import java.util.Comparator;
 import java.util.Iterator;
 
+import seminar1.collections.ArrayPriorityQueue;
+
 /**
  * Итератор возвращающий последовательность из N возрастающих итераторов в порядке возрастания
  * first = 1,3,4,5,7
@@ -17,24 +19,32 @@ public class MergingPeekingIncreasingIterator implements Iterator<Integer> {
 
     private Comparator<PeekingIncreasingIterator> comparator = (p1, p2) -> p1.peek().compareTo(p2.peek());
     PeekingIncreasingIterator[] iterators;
+    ArrayPriorityQueue<Integer> heap;
+
 
     public MergingPeekingIncreasingIterator(IPeekingIterator... peekingIterator) {
-        /* TODO: implement it */
-        iterators = new PeekingIncreasingIterator[peekingIterator.length];
-        for (int i = 0; i < peekingIterator.length; i++) {
-
+        this.iterators = new PeekingIncreasingIterator[peekingIterator.length];
+        for(int i = 0; i < iterators.length; i++)
+        {
+            this.iterators[i] = (PeekingIncreasingIterator) peekingIterator[i];
+        }
+        heap = new ArrayPriorityQueue<>();
+        for(int i = 0; i < iterators.length; i++)
+        {
+            while(iterators[i].hasNext())
+            {
+                heap.add(iterators[i].next());
+            }
         }
     }
 
     @Override
     public boolean hasNext() {
-        /* TODO: implement it */
-        return false;
+        return !heap.isEmpty();
     }
 
     @Override
     public Integer next() {
-        /* TODO: implement it */
-        return null;
+        return heap.extractMin();
     }
 }

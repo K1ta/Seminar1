@@ -1,24 +1,18 @@
 package seminar1;
 
-import seminar1.collections.CyclicArrayDeque;
+import seminar1.iterators.MergingPeekingIncreasingIterator;
+import seminar1.iterators.PeekingIncreasingIterator;
 
 public class Main {
 
     public static void main(String[] args) {
-        CyclicArrayDeque<Integer> dec = new CyclicArrayDeque<>();
-        for (int i = 0; i < 25; i++) {
-            if (i % 2 == 0) {
-                dec.pushFront(i);
-            } else {
-                dec.pushBack(i);
-            }
-        }
-        for (int i = 0; i < 25; i++) {
-            if (i % 2 == 0) {
-                System.out.println(dec.popBack());
-            } else {
-                System.out.println(dec.popFront());
-            }
+        PeekingIncreasingIterator it1 = new PeekingIncreasingIterator(1, 7, 7);
+        PeekingIncreasingIterator it2 = new PeekingIncreasingIterator(3, 7, 30);
+        PeekingIncreasingIterator it3 = new PeekingIncreasingIterator(2, 4, 10);
+        MergingPeekingIncreasingIterator it = new MergingPeekingIncreasingIterator(it1, it2, it3);
+        while(it.hasNext())
+        {
+            System.out.println(it.next());
         }
     }
 }
