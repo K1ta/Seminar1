@@ -67,7 +67,7 @@ public class CyclicArrayQueue<Item> implements IQueue<Item> {
     }
 
     private void shrink() {
-        int newCapacity = elementData.length >> 1;
+        int newCapacity = Math.max(elementData.length >> 1, DEFAULT_CAPACITY);
         Item a[] = (Item[]) new Object[newCapacity];
         if (head < tail) {
             System.arraycopy(elementData, head, a, 0, tail - head);
