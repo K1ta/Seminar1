@@ -38,16 +38,14 @@ public class Solver {
     }
 
     public static void main(String[] args) {
-        String sequence = "( 100 + ( 1 + ( 2 * ( 3 - 1 ) ) ) )";
-        System.out.println(evaluate(sequence.split(" ")));
-        /*try (BufferedReader lineReader = new BufferedReader(new InputStreamReader(System.in))) {
+        try (BufferedReader lineReader = new BufferedReader(new InputStreamReader(System.in))) {
             String sequence;
             while (!QUIT.equals(sequence = lineReader.readLine())) {
                 System.out.println(evaluate(sequence.split(" ")));
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 
     private static class Node {
@@ -82,16 +80,14 @@ public class Solver {
             return cur;
         }
         String value = queue.dequeue();
-        while(value.charAt(0) == RIGHT_PAREN)
-        {
+        while (value.charAt(0) == RIGHT_PAREN) {
             value = queue.dequeue();
         }
         if (value.charAt(0) == LEFT_PAREN) {
             cur = new Node(null, null, null);
             cur.left = put(cur.left);
             value = queue.dequeue();
-            while(value.charAt(0) == RIGHT_PAREN)
-            {
+            while (value.charAt(0) == RIGHT_PAREN) {
                 value = queue.dequeue();
             }
             cur.value = value;

@@ -28,8 +28,9 @@ public class ParenthesesSequence {
             } else if (c == RIGHT_PAREN) {
                 k--;
             }
-            if (k < 0)
+            if (k < 0) {
                 return false;
+            }
         }
         return k == 0;
     }

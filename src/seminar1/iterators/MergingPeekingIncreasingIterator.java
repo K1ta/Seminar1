@@ -10,10 +10,10 @@ import seminar1.collections.ArrayPriorityQueue;
  * first = 1,3,4,5,7
  * second = 0,2,4,6,8
  * result = 0,1,2,3,4,4,5,6,7,8
- *
+ * <p>
  * Time = O(n + k * log n),
- *  n — количество итераторов
- *  k — суммарное количество элементов
+ * n — количество итераторов
+ * k — суммарное количество элементов
  */
 public class MergingPeekingIncreasingIterator implements Iterator<Integer> {
 
@@ -24,15 +24,12 @@ public class MergingPeekingIncreasingIterator implements Iterator<Integer> {
 
     public MergingPeekingIncreasingIterator(IPeekingIterator... peekingIterator) {
         this.iterators = new PeekingIncreasingIterator[peekingIterator.length];
-        for(int i = 0; i < iterators.length; i++)
-        {
+        for (int i = 0; i < iterators.length; i++) {
             this.iterators[i] = (PeekingIncreasingIterator) peekingIterator[i];
         }
         heap = new ArrayPriorityQueue<>();
-        for(int i = 0; i < iterators.length; i++)
-        {
-            while(iterators[i].hasNext())
-            {
+        for (int i = 0; i < iterators.length; i++) {
+            while (iterators[i].hasNext()) {
                 heap.add(iterators[i].next());
             }
         }

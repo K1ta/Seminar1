@@ -10,8 +10,7 @@ public class Main {
         PeekingIncreasingIterator it2 = new PeekingIncreasingIterator(3, 7, 30);
         PeekingIncreasingIterator it3 = new PeekingIncreasingIterator(2, 4, 10);
         MergingPeekingIncreasingIterator it = new MergingPeekingIncreasingIterator(it1, it2, it3);
-        while(it.hasNext())
-        {
+        while (it.hasNext()) {
             System.out.println(it.next());
         }
     }

@@ -94,8 +94,7 @@ public class LinkedDeque<Item> implements IDeque<Item> {
         }
     }
 
-    private class LinkedDequeIterator implements Iterator<Item>
-    {
+    private class LinkedDequeIterator implements Iterator<Item> {
         Node<Item> cur = new Node<>(null, null, head);
 
         @Override

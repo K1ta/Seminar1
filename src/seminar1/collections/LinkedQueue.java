@@ -22,19 +22,16 @@ public class LinkedQueue<Item> implements IQueue<Item> {
 
     @Override
     public Item dequeue() {
-        if(head != null)
-        {
+        if (head != null) {
             Item item = head.item;
-            if(size == 1)
-            {
+            if (size == 1) {
                 head = null;
                 tail = null;
                 size = 0;
                 return item;
             }
             Node<Item> prev = tail;
-            while(prev.next != head)
-            {
+            while (prev.next != head) {
                 prev = prev.next;
             }
             prev.next = null;

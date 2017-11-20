@@ -17,8 +17,7 @@ public class LinkedStack<Item> implements IStack<Item> {
 
     @Override
     public Item pop() {
-        if(size > 0)
-        {
+        if (size > 0) {
             Node<Item> node = head;
             head = head.next;
             size--;

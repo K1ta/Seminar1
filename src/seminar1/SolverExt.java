@@ -68,7 +68,7 @@ public class SolverExt {
                     String s = list.remove(i - 2);
                     double b = Double.parseDouble(list.remove(i - 2));
                     list.add(i - 2, Double.toString(op(a, s, b)));
-                    i = i-2;
+                    i = i - 2;
                 } else if (state == 3 && newState == 4) {
                     ArrayList<String> tempList = new ArrayList<>();
                     for (int j = index; j <= i; j++) {
@@ -86,8 +86,8 @@ public class SolverExt {
                         String s = list.remove(i - 2);
                         double b = Double.parseDouble(list.remove(i - 2));
                         list.add(i - 2, Double.toString(op(a, s, b)));
-                        i = i-2;
-                    } else if (i + 1 >= list.size()){
+                        i = i - 2;
+                    } else if (i + 1 >= list.size()) {
                         double a = Double.parseDouble(list.remove(i - 2));
                         String s = list.remove(i - 2);
                         double b = Double.parseDouble(list.remove(i - 2));
